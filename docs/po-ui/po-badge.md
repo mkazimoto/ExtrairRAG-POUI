@@ -6,11 +6,15 @@ Utilizado para exibir a quantidade de notificações.
 
 ---
 
+**`p-aria-label`**
+
 @description
 
 Define um `aria-label` para o `po-badge`
 
 ---
+
+**`p-color`**
 
 @optional
 
@@ -38,6 +42,8 @@ Valores válidos:
 @default `color-07`
 
 ---
+
+**`p-icon`**
 
 @optional
 
@@ -67,6 +73,8 @@ Outra opção seria a customização do ícone através do `TemplateRef`, confor
 
 ---
 
+**`p-status`**
+
 @description
 
 Define o estado do `po-badge`
@@ -78,6 +86,8 @@ Valores válidos:
 - `disabled`: Define a cor do `po-badge` com a cor de feedback disabled;
 
 ---
+
+**`p-size`**
 
 @description
 
@@ -92,6 +102,8 @@ Valores válidos:
 
 ---
 
+**`p-show-border`**
+
 @description
 
 Exibe uma borda para o `po-badge`
@@ -99,6 +111,8 @@ Exibe uma borda para o `po-badge`
 > Pode personalizar cor da bordar com a propriedade `p-color-border`
 
 ---
+
+**`p-value`**
 
 @description
 

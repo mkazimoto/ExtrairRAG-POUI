@@ -53,6 +53,18 @@ parte de um mesmo contexto.
 
 ---
 
+**`p-buttons`**
+
+@Input
+
+@description
+
+Lista de botões.
+
+---
+
+**`p-toggle`**
+
 @optional
 
 @description
@@ -65,6 +77,8 @@ Define o modo de seleção dos botões no componente conforme valores especifica
 @default `none`
 
 ---
+
+**`p-size`**
 
 @optional
 
