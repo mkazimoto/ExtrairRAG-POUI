@@ -117,3 +117,19 @@ Para mais detalhes, consulte a documentação do [po-theme](https://po-ui.io/doc
  <file name="sample-po-button-group-post/sample-po-button-group-post.component.html"> </file>
  <file name="sample-po-button-group-post/sample-po-button-group-post.component.ts"> </file>
 </example>
+
+---
+
+### Enum `PoButtonGroupToggle`
+
+/**
+@usedBy PoButtonGroupComponent
+
+@description
+
+Tipos de seleção (`p-toggle`) disponíveis para o componente.
+/
+
+- `Multiple = 'multiple'` — Seleção múltipla.
+- `None = 'none'` — Seleção desabilitada.
+- `Single = 'single'` — Seleção única.

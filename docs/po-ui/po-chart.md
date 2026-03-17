@@ -293,3 +293,114 @@ O evento emitirá o seguinte parâmetro de acordo com o tipo de gráfico:
  <file name="sample-po-chart-technology-skill/sample-po-chart-technology-skill.component.html"> </file>
  <file name="sample-po-chart-technology-skill/sample-po-chart-technology-skill.component.ts"> </file>
 </example>
+
+---
+
+### Enum `PoChartLabelFormat`
+
+/**
+@usedBy PoChartComponent
+
+@description
+
+*Enum* `PoChartLabelFormat` para especificação dos tipos de formatação do eixo de valor no gráfico.
+/
+
+### Enum `PoChartType`
+
+/**
+@usedBy PoChartComponent
+
+@description
+
+*Enum* `PoChartType` para especificação dos tipos de gráficos.
+/
+
+
+
+---
+
+### Interface `PoChartAxisOptions`
+
+/**
+@usedBy PoChartComponent
+
+@description
+
+*Interface* que define os eixos do grid.
+/
+
+### Interface `PoChartHeaderOptions`
+
+/**
+@usedBy PoChartComponent
+
+@description
+
+*Interface* para configuração das ações disponíveis no cabeçalho.
+/
+
+### Interface `PoChartIndicatorOptions`
+
+/**
+@usedBy PoChartComponent
+
+@description
+
+Interface para configurações dos indicadores do gráfico `radar`.
+/
+
+
+
+### Interface `PoChartLiterals`
+
+/**
+@usedBy PoChartComponent
+
+@description
+
+Interface para definição dos literais usadas no `po-chart`.
+/
+
+### Interface `PoChartOptions`
+
+/**
+@usedBy PoChartComponent
+
+@description
+
+*Interface* para configurações dos elementos do gráfico.
+/
+
+### Interface `PoChartRadarOptions`
+
+/**
+@usedBy PoChartComponent
+
+@description
+
+*Interface* para configurações do gráfico `radar`.
+/
+
+### Interface `PoChartDataLabel`
+
+/**
+@usedBy PoChartComponent
+
+@description
+
+Interface que define as propriedades de exibição dos rótulos das séries no `po-chart`.
+
+/
+
+### Interface `PoChartSerie`
+
+/**
+@usedBy PoChartComponent
+
+@description
+
+Interface das series dinâmicas do `po-chart` que possibilita desenhar gráficos dos tipos `area`, `bar`, `column`, `line`, `donut`, `pie` e `radar`
+/
+
+- `label: string` — Rótulo referência da série.

@@ -137,3 +137,20 @@ Número exibido no componente, caso o mesmo seja maior que 9 o valor exibido ser
  <file name="sample-po-badge-message/sample-po-badge-message.component.css"> </file>
  <file name="sample-po-badge-message/sample-po-badge-message.component.ts"> </file>
 </example>
+
+---
+
+### Interface `PoBadgeLiterals`
+
+/**
+@docsPrivate
+
+@usedBy PoBadgeComponent
+
+@description
+
+Interface para definição das literais usadas no `po-badge`.
+/
+
+- `notification: string` — Texto utilizado na propriedade `aria-label` do `po-badge` ao ter somente uma notificação.
+- `notifications: string` — Texto utilizado na propriedade `aria-label` do `po-badge` ao ter mais de uma notificação.

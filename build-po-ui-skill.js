@@ -4,15 +4,26 @@ import fetch from "node-fetch";
 
 const httpsAgent = new https.Agent({ rejectUnauthorized: false });
 
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN || "";
+const GITHUB_HEADERS = {
+  "Accept": "application/vnd.github+json",
+  ...(GITHUB_TOKEN ? { "Authorization": `Bearer ${GITHUB_TOKEN}` } : {})
+};
+
 const GITHUB_RAW = "https://raw.githubusercontent.com/po-ui/po-angular/master/projects/ui/src/lib/components";
 const GITHUB_API = "https://api.github.com/repos/po-ui/po-angular/contents/projects/ui/src/lib/components";
 
 async function getComponents() {
 
   const json = await fetch(GITHUB_API, {
-    headers: { "Accept": "application/vnd.github+json" },
+    headers: GITHUB_HEADERS,
     agent: httpsAgent
   }).then(r => r.json());
+
+  if (!Array.isArray(json)) {
+    console.error("Erro ao listar componentes:", json.message || JSON.stringify(json));
+    process.exit(1);
+  }
 
   return json
     .filter(entry => entry.type === "dir" && entry.name.startsWith("po-"))
@@ -106,6 +117,85 @@ async function fetchFileContent(url) {
   return res.text();
 }
 
+async function fetchApiJson(url) {
+  try {
+    const res = await fetch(url, {
+      headers: GITHUB_HEADERS,
+      agent: httpsAgent
+    });
+    if (!res.ok) return [];
+    const json = await res.json();
+    return Array.isArray(json) ? json : [];
+  } catch {
+    return [];
+  }
+}
+
+function extractInterfacesAndEnums(source) {
+  const sections = [];
+
+  // Extrai enums: captura o JSDoc + nome + membros
+  const enumRegex = /(?:(\/\*\*[\s\S]*?\*\/)\s*)?export\s+(?:const\s+)?enum\s+(\w+)\s*\{([^}]*)\}/g;
+  let m;
+  while ((m = enumRegex.exec(source)) !== null) {
+    const jsdoc = m[1] ? m[1].split('\n').map(l => l.replace(/^\s*\*\s?/, '')).join('\n').trim() : '';
+    const name = m[2];
+    const body = m[3];
+
+    // Extrai membros com seus JSDoc de linha única
+    const members = [];
+    const memberRegex = /\/\*\*([^*]*)\*\/\s*(\w+)\s*=\s*['"](.*?)['"]/g;
+    let mm;
+    while ((mm = memberRegex.exec(body)) !== null) {
+      const desc = mm[1].trim();
+      members.push(`- \`${mm[2]} = '${mm[3]}'\` — ${desc}`);
+    }
+
+    let text = `### Enum \`${name}\`\n\n`;
+    if (jsdoc) text += jsdoc + '\n\n';
+    if (members.length) text += members.join('\n');
+    sections.push(text.trim());
+  }
+
+  // Extrai interfaces: captura o JSDoc + nome + campos
+  const ifaceRegex = /(?:(\/\*\*[\s\S]*?\*\/)\s*)?export\s+interface\s+(\w+)\s*\{([^}]*)\}/g;
+  while ((m = ifaceRegex.exec(source)) !== null) {
+    const jsdoc = m[1] ? m[1].split('\n').map(l => l.replace(/^\s*\*\s?/, '')).join('\n').trim() : '';
+    const name = m[2];
+    const body = m[3];
+
+    // Extrai campos com seus JSDoc de linha única
+    const fields = [];
+    const fieldRegex = /\/\*\*([^*]*)\*\/\s*(\w+)\??(\s*:\s*[^;\n]+)/g;
+    let fm;
+    while ((fm = fieldRegex.exec(body)) !== null) {
+      const desc = fm[1].trim();
+      const fieldName = fm[2];
+      const fieldType = fm[3].trim();
+      fields.push(`- \`${fieldName}${fieldType}\` — ${desc}`);
+    }
+
+    let text = `### Interface \`${name}\`\n\n`;
+    if (jsdoc) text += jsdoc + '\n\n';
+    if (fields.length) text += fields.join('\n');
+    sections.push(text.trim());
+  }
+
+  return sections.join('\n\n---\n\n');
+}
+
+async function fetchSubfolderFiles(component, subfolder) {
+  await new Promise(r => setTimeout(r, 300)); // respeita rate limit da GitHub API
+  const url = `${GITHUB_API}/${component}/${subfolder}`;
+  const files = await fetchApiJson(url);
+  let result = '';
+  for (const file of files.filter(f => f.name.endsWith('.ts'))) {
+    const src = await fetchFileContent(file.download_url);
+    if (src) result += extractInterfacesAndEnums(src) + '\n\n';
+  }
+  return result;
+}
+
 async function downloadComponent(component) {
 
   const baseUrl = `${GITHUB_RAW}/${component}`;
@@ -123,12 +213,20 @@ async function downloadComponent(component) {
     }
   }
 
-  if (!docs.trim()) {
+  // Extrai interfaces e enums das subpastas
+  const enumDocs = await fetchSubfolderFiles(component, 'enums');
+  const ifaceDocs = await fetchSubfolderFiles(component, 'interfaces');
+
+  const extraDocs = [enumDocs, ifaceDocs].filter(s => s.trim()).join('\n\n---\n\n');
+
+  const allDocs = [docs.trim(), extraDocs.trim()].filter(s => s).join('\n\n---\n\n');
+
+  if (!allDocs) {
     console.log("sem docs:", component);
     return;
   }
 
-  const md = `# ${component}\n\n${docs.trim()}\n`;
+  const md = `# ${component}\n\n${allDocs}\n`;
   const path = `docs/po-ui/${component}.md`;
   await fs.outputFile(path, md);
   console.log("gerado:", component);

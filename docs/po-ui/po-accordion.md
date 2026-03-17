@@ -197,3 +197,18 @@ Só pode ser utilizado quando a propriedade `p-show-manager-accordion` estiver c
 
 Método para expandir todos os itens.
 Só pode ser utilizado quando a propriedade `p-show-manager-accordion` estiver como `true`.
+
+---
+
+### Interface `PoAccordionLiterals`
+
+/**
+@usedBy PoAccordionComponent
+
+@description
+
+Interface para definição das literais usadas no `po-accordion`.
+/
+
+- `expandAllItems: string` — Label do gerenciador de Accordion para expandir todos os itens.
+- `closeAllItems: string` — Label do gerenciador de Accordion para colapsar todos os itens

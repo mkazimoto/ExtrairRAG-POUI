@@ -253,3 +253,51 @@ focusButton() {
   this.button.focus();
 }
 ```
+
+---
+
+### Enum `PoButtonKind`
+
+/**
+@usedBy PoButtonComponent, PoWidgetComponent
+
+@description
+
+Estilos disponíveis do button.
+/
+
+- `primary = 'primary'` — Estilo primário, usado para ações principais que requerem maior destaque.
+- `secondary = 'secondary'` — Estilo secundário, usado como padrão, para ações comuns.
+- `tertiary = 'tertiary'` — Estilo terciário, ideal para ações menos importantes, sem fundo preenchido.
+
+### Enum `PoButtonSize`
+
+/**
+@description
+
+Tamanhos da propriedade `p-size`. A medida `small` está disponível apenas para acessibilidade AA.
+/
+
+- `Small = 'small'` — Define a altura do button como 32px.
+- `Medium = 'medium'` — Define a altura do button como 44px.
+- `Large = 'large'` — Define a altura do button como 56px.
+
+### Enum `PoButtonType`
+
+/**
+@usedBy PoButtonComponent
+
+@description
+
+Enumeração que define os tipos possíveis para o `PoButtonComponent`. Estes tipos estão relacionados ao comportamento
+do botão quando utilizado dentro de um formulário HTML.
+
+@example
+No uso com o `PoButtonComponent`, a propriedade `p-type` pode ser utilizada para configurar o comportamento:
+
+```
+<po-button p-label="Enviar" p-type="submit"></po-button>
+<po-button p-label="Cancelar" p-type="button"></po-button>
+<po-button p-label="Redefinir" p-type="reset"></po-button>
+```
+/
