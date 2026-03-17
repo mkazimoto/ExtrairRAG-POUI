@@ -260,3 +260,95 @@ Evento emitido ao clicar no botão para colapsar ou expandir menu.
  <file name="sample-po-header-apps/sample-po-header-apps.component.html"> </file>
  <file name="sample-po-header-apps/sample-po-header-apps.component.ts"> </file>
 </example>
+
+---
+
+### Interface `PoHeaderActionTool`
+
+/**
+@usedBy PoHeaderComponent
+
+@description
+
+*Interface* que define a seção de Actions do header.
+
+Indicação de uso:
+- Primeira ação destinada à app launcher.
+- Segunda ação (terceiro ícone) destinada à notificações.
+- Terceira ação (segundo ícone) destinada para agrupamento de ações.
+
+> Caso seja passado items e popover, o componente irá renderizar o popover e os itens serão ignorados.
+
+/
+
+---
+
+### Interface `PoHeaderActionPopoverAction`
+
+/**
+@usedBy PoHeaderComponent
+
+@description
+
+*Interface* que define um template para uma ação.
+
+/
+
+---
+
+### Interface `PoHeaderActionToolItem`
+
+/**
+@usedBy PoHeaderComponent
+
+@description
+
+*Interface* que define uma lista de ações.
+
+/
+
+### Interface `PoHeaderActions`
+
+/**
+@usedBy PoHeaderComponent
+
+@description
+
+*Interface* que define uma lista de ações no sub-menu.
+
+/
+
+### Interface `PoHeaderBrand`
+
+/**
+@usedBy PoHeaderComponent
+
+@description
+
+*Interface* que define a seção de brand.
+
+/
+
+### Interface `PoHeaderLiterals`
+
+/**
+@usedBy PoHeaderComponent
+
+@description
+
+Interface para definição das literais usadas no `po-header`.
+/
+
+- `headerLinks: string` — Texto exibido no item de menu no qual os itens do header são agrupados quando está no modo responsivo.
+- `notifications: string` — Texto para indicação de notificação, caso seja passado um valor válido na propriedade `badge`
+
+### Interface `PoHeaderUser`
+
+/**
+@usedBy PoHeaderComponent
+
+@description
+
+*Interface* que define a seção de Customer do header.
+
+/

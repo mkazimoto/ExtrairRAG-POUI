@@ -201,3 +201,21 @@ Indica que o botão `Carregar Mais Resultados` será desabilitado.
  <file name="sample-po-list-view-hiring-processes/sample-po-list-view-hiring-processes.component.ts"> </file>
  <file name="sample-po-list-view-hiring-processes/sample-po-list-view-hiring-processes.service.ts"> </file>
 </example>
+
+---
+
+### Interface `PoListViewLiterals`
+
+/**
+@usedBy PoListViewComponent
+
+@description
+
+Interface para definição das literais usadas no `po-list-view`.
+/
+
+- `hideDetails: string` — Rótulo do botão que oculta os detalhes do item.
+- `loadMoreData: string` — Rótulo do botão que deve carregar mais resultados.
+- `noData: string` — Rótulo exibido quando não existem itens para serem exibidos na lista.
+- `selectAll: string` — Rótulo do `checkbox` da opção de selecionar todos.
+- `showDetails: string` — Rótulo do botão que exibe os detalhes do item.

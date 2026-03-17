@@ -25,3 +25,12 @@ Valores válidos:
  - `lg`: 80px
 
 @default `lg`
+
+---
+
+### Enum `PoLoadingIconSize`
+
+- `xs = 'xs'` — Extra small
+- `sm = 'sm'` — Small
+- `md = 'md'` — Medium
+- `lg = 'lg'` — Large

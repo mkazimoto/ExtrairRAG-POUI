@@ -142,13 +142,32 @@ function extractInterfacesAndEnums(source) {
     const name = m[2];
     const body = m[3];
 
-    // Extrai membros com seus JSDoc de linha única
+    // Extrai membros com seus JSDoc (suporta comentários de linha única e multi-linha)
     const members = [];
-    const memberRegex = /\/\*\*([^*]*)\*\/\s*(\w+)\s*=\s*['"](.*?)['"]/g;
+    const memberRegex = /\/\*\*([\s\S]*?)\*\/\s*(\w+)\s*=\s*['"](.*?)['"]/g;
     let mm;
     while ((mm = memberRegex.exec(body)) !== null) {
-      const desc = mm[1].trim();
-      members.push(`- \`${mm[2]} = '${mm[3]}'\` — ${desc}`);
+      const rawDesc = mm[1].split('\n').map(l => l.replace(/^\s*\*\s?/, '')).join(' ').trim();
+      const desc = rawDesc
+        .replace(/@optional\s*/g, '')
+        .replace(/@description\s*/g, '')
+        .replace(/@default\s+\S+\s*/g, '')
+        .replace(/@\w+\s*/g, '')
+        .trim();
+      if (desc) {
+        members.push(`- \`${mm[2]} = '${mm[3]}'\` — ${desc}`);
+      } else {
+        members.push(`- \`${mm[2]} = '${mm[3]}'\``);
+      }
+    }
+
+    // Fallback: captura membros sem JSDoc
+    if (members.length === 0) {
+      const plainMemberRegex = /^\s*(\w+)\s*=\s*['"](.*?)['"]/gm;
+      let pm;
+      while ((pm = plainMemberRegex.exec(body)) !== null) {
+        members.push(`- \`${pm[1]} = '${pm[2]}'\``);
+      }
     }
 
     let text = `### Enum \`${name}\`\n\n`;
@@ -157,22 +176,43 @@ function extractInterfacesAndEnums(source) {
     sections.push(text.trim());
   }
 
-  // Extrai interfaces: captura o JSDoc + nome + campos
-  const ifaceRegex = /(?:(\/\*\*[\s\S]*?\*\/)\s*)?export\s+interface\s+(\w+)\s*\{([^}]*)\}/g;
-  while ((m = ifaceRegex.exec(source)) !== null) {
+  // Extrai interfaces: captura o JSDoc + nome e extrai o body balanceando chaves
+  const ifaceStartRegex = /(?:(\/\*\*[\s\S]*?\*\/)\s*)?export\s+interface\s+(\w+)[^{]*\{/g;
+  while ((m = ifaceStartRegex.exec(source)) !== null) {
     const jsdoc = m[1] ? m[1].split('\n').map(l => l.replace(/^\s*\*\s?/, '')).join('\n').trim() : '';
     const name = m[2];
-    const body = m[3];
 
-    // Extrai campos com seus JSDoc de linha única
+    // Extrai o body balanceando chaves para suportar tipos com { } nos campos
+    let depth = 1;
+    let i = m.index + m[0].length;
+    let body = '';
+    while (i < source.length && depth > 0) {
+      if (source[i] === '{') depth++;
+      else if (source[i] === '}') depth--;
+      if (depth > 0) body += source[i];
+      i++;
+    }
+
+    // Extrai campos com seus JSDoc (suporta multi-linha)
     const fields = [];
-    const fieldRegex = /\/\*\*([^*]*)\*\/\s*(\w+)\??(\s*:\s*[^;\n]+)/g;
+    const fieldRegex = /\/\*\*([\s\S]*?)\*\/\s*(\w+)\??(\s*:\s*[^;\n]+)/g;
     let fm;
     while ((fm = fieldRegex.exec(body)) !== null) {
-      const desc = fm[1].trim();
+      const rawDesc = fm[1].split('\n').map(l => l.replace(/^\s*\*\s?/, '')).join(' ').trim();
+      // Remove tags JSDoc como @optional, @description, @default etc. e extrai só o texto
+      const desc = rawDesc
+        .replace(/@optional\s*/g, '')
+        .replace(/@description\s*/g, '')
+        .replace(/@default\s+\S+\s*/g, '')
+        .replace(/@\w+\s*/g, '')
+        .trim();
       const fieldName = fm[2];
       const fieldType = fm[3].trim();
-      fields.push(`- \`${fieldName}${fieldType}\` — ${desc}`);
+      if (desc) {
+        fields.push(`- \`${fieldName}${fieldType}\` — ${desc}`);
+      } else {
+        fields.push(`- \`${fieldName}${fieldType}\``);
+      }
     }
 
     let text = `### Interface \`${name}\`\n\n`;

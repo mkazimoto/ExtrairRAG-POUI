@@ -139,3 +139,18 @@ correto do conteúdo próximo ao elemento.
  <file name="sample-po-helper-sales-performance/sample-po-helper-sales-performance.component.html"> </file>
  <file name="sample-po-helper-sales-performance/sample-po-helper-sales-performance.component.ts"> </file>
 </example>
+
+---
+
+### Interface `PoHelperOptions`
+
+/**
+@usedBy PoHelperComponent
+
+@description
+
+*Interface* que define as opções de configuração do componente po-helper.
+
+Permite customizar o conteúdo, título, tipo do ícone, modo de abertura do popover, ações customizadas e eventos.
+
+/

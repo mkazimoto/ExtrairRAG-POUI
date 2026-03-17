@@ -151,3 +151,60 @@ A mesma regra prevalece para valores máximos.
 
 @deprecated v22.x.x
 Utilize o `po-chart` com `type="gauge"` como alternativa recomendada.
+
+---
+
+### Interface `PoGaugeCoordinates`
+
+/**
+@docsPrivate
+
+@usedBy PoGaugeComponent
+
+@description
+
+Interface que define o objeto com as coordenadas do gauge.
+/
+
+- `color: string` — A cor do alcance. Aceita hexadecimais, string com nome da cor, RGB ou então uma das classes de cor do PO.
+- `coordinates: string` — Definição de coordenadas.
+- `radius: number` — O raio do circulo. Utilizado para posicionar o ponteiro no centro do gauge.
+- `pointerDegrees: number` — O grau de angulação do ponteiro.
+
+### Interface `PoGaugeOptions`
+
+/**
+@usedBy PoGaugeComponent
+
+@description
+
+*Interface* para configurações dos elementos do gráfico.
+/
+
+### Interface `PoGaugeRanges`
+
+/**
+@usedBy PoGaugeComponent
+
+@description
+
+Interface que define os alcances das cores do gauge.
+/
+
+- `from: number` — Alcance inicial da cor. O valor padrão é 0.
+- `to: number` — Alcance final da cor. O valor padrão é 100.
+
+### Interface `PoGaugeSvgContainer`
+
+/**
+@docsPrivate
+
+@usedBy PoGaugeComponent
+
+@description
+
+Interface que implementa as dimensões do container do SVG.
+/
+
+- `height: number` — Altura do container.
+- `width: number` — Largura do container.

@@ -44,3 +44,32 @@ Evento disparado no click de uma aba do tabs
 **`p-footer-action-listbox-event`**
 
 Evento disparado ao clicar na ação do rodapé do listbox
+
+---
+
+### Enum `PoItemListFilterMode`
+
+### Enum `PoItemListType`
+
+- `action = 'action'`
+- `check = 'check'`
+- `option = 'option'`
+- `danger = 'danger'`
+
+
+
+---
+
+### Interface `PoListBoxLiterals`
+
+/**
+@usedBy PoListBoxComponent
+
+@description
+
+Interface para definição de literais utilizadas no `po-listbox`
+/
+
+- `backToPreviousGroup: string` — Texto do botão para voltar ao agrupador anterior.
+- `noItems: string` — Texto exibido quando não houver itens na lista
+- `selectAll: string` — Texto do checkbox para selecionar todos os itens.

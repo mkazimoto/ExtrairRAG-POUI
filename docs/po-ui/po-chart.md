@@ -306,6 +306,8 @@ O evento emitirá o seguinte parâmetro de acordo com o tipo de gráfico:
 *Enum* `PoChartLabelFormat` para especificação dos tipos de formatação do eixo de valor no gráfico.
 /
 
+- `Number = 'number'` — Os valores serão exibidos no formato numérico com duas casas decimais. Equivalente ao formato `'1.2-2'` da [DecimalPipe](https://angular.io/api/common/DecimalPipe).
+
 ### Enum `PoChartType`
 
 /**
@@ -315,6 +317,15 @@ O evento emitirá o seguinte parâmetro de acordo com o tipo de gráfico:
 
 *Enum* `PoChartType` para especificação dos tipos de gráficos.
 /
+
+- `Area = 'area'` — Tipo de gráfico que exibe os dados de modo quantitativo, utilizando linhas contínuas demarcadas por pontos para cada valor de série definido. Similar ao gráfico de linha, diferencia-se pela área localizada abaixo da linha das séries, que é preenchida com cores para um destaque explícita da evolução e mudança dos dados.
+- `Donut = 'donut'` — Exibe os dados em formato de rosca, dividindo em partes proporcionais.
+- `Pie = 'pie'` — Exibe os dados em formato circular, dividindo proporcionalmente em fatias.
+- `Line = 'line'` — Gráfico que mostra os dados de modo linear e contínuo. É útil, por exemplo, para fazer comparações de tendência durante determinado período. Pode ser utilizado em conjunto com gráficos dos tipos `column` e `area`, definindo-se o tipo através da propriedade `PoChartSerie.type`.
+- `Column = 'column'` — Gráfico que exibe os dados em forma de barras verticais e sua extensão varia de acordo com seus valores. É comumente usado como comparativo entre diversas séries. As séries são exibidas lado-a-lado, com um pequeno espaço entre elas.
+- `Bar = 'bar'` — Gráfico que exibe os dados em forma de barras horizontais e sua extensão varia de acordo com seus valores. É comumente usado como comparativo de séries e categorias.
+- `Gauge = 'gauge'` — Gráfico que provê a representação de um valor através de um arco. Possui dois tipos de tratamentos: - É possível demonstrar um dado percentual simples em conjunto com uma descrição resumida em seu interior; - Para um demonstrativo mais elaborado, consegue-se definir alcances em cores, um breve texto descritivo e um ponteiro indicando o valor desejado.
+- `Radar = 'radar'` — Tipo de gráfico utilizado para visualizar e comparar o desempenho de diferentes itens em múltiplas categorias.
 
 
 
